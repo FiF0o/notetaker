@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import App from './App'
+import App from './components/App'
+console.log('jhgjretererterterterterdsddstewreree');
 
 const app = document.getElementById('app')
 

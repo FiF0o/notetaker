@@ -1,0 +1,19 @@
+{
+  "name": "webpack-starterkit",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "jon <jonathan.lazarini@wipro.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/FiF0o/todo",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/vendors",
+    "test",
+    "tests"
+  ]
+}
