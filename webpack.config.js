@@ -1,23 +1,13 @@
 // dev mode from NODE
 const debug = process.env.NODE_ENV !== "production"
 
+const webpack = require('webpack')
+
 const path = require('path')
 const sassLintPlugin = require('sasslint-webpack-plugin')
 const packageJson = require('./package.json')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// console.log(path.resolve(__dirname, ".eslintrc"))
-// console.log([path.resolve(__dirname, "./src", "/sass/")]) // returns /sass
-// // converts sass to css
-// const css1 = require("!raw!sass-loader!./src/sass/main.sass")
-// console.log(css1)
-// console.log(css1)
-// //chain style loader
-// const css = require("!style-loader!css!sass-loader!./src/sass/main.sass");
-// console.log(css)
-// // returns compiled css code from file.scss, resolves Sass imports
-//const css = require("!css!sass!./src/sass/main.sass");
-// returns compiled css code from file.scss, resolves Sass and CSS imports and url(...)s
 
 module.exports = {
   // base dir for resolving entry option - src/ will be root dir
@@ -43,12 +33,7 @@ module.exports = {
   devtool: debug ? "inline-source-map" : null,
   eslint: {
     configFile: './.eslintrc'
-    // configFile: path.resolve(__dirname, ".eslintrc")
   },
-  // sassloader: {
-  //   includePaths: [path.resolve(__dirname, "./node_modules/bootstrap-sass/assets/stylesheets/")],
-  // //   // data: "$env: " + process.env.NODE_ENV + ";"
-  // },
   devServer: {
     // needs contentBase to tell webpack where the content is served
     contentBase: path.join(__dirname, 'public/'),
@@ -75,7 +60,7 @@ module.exports = {
         loaders: [
           "style-loader",
           "css-loader?sourceMap",
-          "sass-loader?sourceMap?config=sassloader"
+          "sass-loader?sourceMap"
         ],
         exclude: [/vendors/, /bower_components/]
       },
@@ -84,8 +69,8 @@ module.exports = {
       { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
     ]
   },
-  // production, run plugins
-  plugins: [
+  // current val is development, run plugins
+  plugins: !debug ? [] : [
     new sassLintPlugin({
      configFile: './.sass-lint.yml',
      context: ['inherits from webpack'],
@@ -97,6 +82,7 @@ module.exports = {
      failOnError: false,
      testing: false
    }),
+   // creates html file on the fly
    new HtmlWebpackPlugin({
          filename: 'index.html',
          js: [ 'index.js' ],
@@ -106,10 +92,10 @@ module.exports = {
                  },
                }
       }),
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin("styles.css"),
-    //new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-    //new webpack.DefinePlugin({ VERSION: JSON.stringify(packageJson.version) }),
+    // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+    new webpack.DefinePlugin({ VERSION: JSON.stringify(packageJson.version) }),
   ]
 }
