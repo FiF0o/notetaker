@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom'
 import { Router, hashHistory } from 'react-router'
 import AppRoutes from './config/AppRoutes'
 
+import '../sass/main.sass'
 // import Main from './components/Main'
 
 const appEntry = document.getElementById('app')
