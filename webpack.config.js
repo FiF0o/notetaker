@@ -5,6 +5,7 @@ const path = require('path')
 const sassLintPlugin = require('sasslint-webpack-plugin')
 const packageJson = require('./package.json')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 // console.log(path.resolve(__dirname, ".eslintrc"))
 // console.log([path.resolve(__dirname, "./src", "/sass/")]) // returns /sass
 // // converts sass to css
@@ -29,14 +30,14 @@ module.exports = {
     })
   },
   output: {
-    path: path.join(__dirname, 'public/assets'),
+    path: path.join(__dirname, 'public'),
     /* reference for web browser - is needed to specify the path -
     Will be using path as base and then add assets to match ./public/assets
     - --content-base public/ needs to passed as a flag
      assets dir will be served - useful to restrict access e.g. serve from /assets dir
     content is now served from /assets (public/assets)
     */
-    publicPath: '/assets/',
+    // publicPath: '/assets/',
     filename: "index.js"
   },
   devtool: debug ? "inline-source-map" : null,
@@ -84,7 +85,7 @@ module.exports = {
     ]
   },
   // production, run plugins
-  plugins: debug ? [] : [
+  plugins: [
     new sassLintPlugin({
      configFile: './.sass-lint.yml',
      context: ['inherits from webpack'],
@@ -96,10 +97,19 @@ module.exports = {
      failOnError: false,
      testing: false
    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new ExtractTextPlugin("styles.css"),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-    new webpack.DefinePlugin({ VERSION: JSON.stringify(packageJson.version) }),
+   new HtmlWebpackPlugin({
+         filename: 'index.html',
+         js: [ 'index.js' ],
+         chunks: {
+                 'main': {
+                   'entry': 'index.js'
+                 },
+               }
+      }),
+    // new webpack.optimize.DedupePlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
+    // new ExtractTextPlugin("styles.css"),
+    // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+    // new webpack.DefinePlugin({ VERSION: JSON.stringify(packageJson.version) }),
   ]
 }
