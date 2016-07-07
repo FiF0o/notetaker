@@ -108,8 +108,8 @@ module.exports = {
       }),
     // new webpack.optimize.DedupePlugin(),
     // new webpack.optimize.OccurenceOrderPlugin(),
-    // new ExtractTextPlugin("styles.css"),
-    // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-    // new webpack.DefinePlugin({ VERSION: JSON.stringify(packageJson.version) }),
+    new ExtractTextPlugin("styles.css"),
+    //new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+    //new webpack.DefinePlugin({ VERSION: JSON.stringify(packageJson.version) }),
   ]
 }
