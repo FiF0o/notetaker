@@ -46,19 +46,16 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components|vendors)/,
-        // preprocess files - tasks -- loaders are right associatives
-        loader: 'babel',
-        // extra params to be passed to the loader when transformations are applied to the code
+        loader: 'babel', // preprocess files - tasks -- loaders are right associatives
         query: {
-          presets: ['react', 'es2015']
+          presets: ['react', 'es2015']   // extra params to be passed to the loader when transformations are applied to the code
         }
       },
       { test: /\.js$/, loader: "eslint-loader?config=eslint", exclude: [/node_modules/, /vendors/, /bower_components/] },
       {
         test: /\.(sass|scss)$/,
-        // passing query parameter using ? instead of the object
         loaders: [
-          "style-loader",
+          "style-loader", // passing query parameter using ? instead of the object
           "css-loader?sourceMap",
           "sass-loader?sourceMap"
         ],
@@ -69,8 +66,7 @@ module.exports = {
       { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
     ]
   },
-  // current val is development, run plugins
-  plugins: !debug ? [] : [
+  plugins: !debug ? [] : [   // current val is development, run plugins when build
     new sassLintPlugin({
      configFile: './.sass-lint.yml',
      context: ['inherits from webpack'],
@@ -82,16 +78,23 @@ module.exports = {
      failOnError: false,
      testing: false
    }),
-   // creates html file on the fly
+     // creates html file on the fly
    new HtmlWebpackPlugin({
-         filename: 'index.html',
-         js: [ 'index.js' ],
-         chunks: {
-                 'main': {
-                   'entry': 'index.js'
-                 },
-               }
-      }),
+     title: 'App title',
+     filename: 'index.html',
+    //  inject:'',
+    //  favicon: '',
+     minify: false,
+     js: [ 'index.js' ],
+     chunks: {
+       'head': {
+         'css': 'main.css'
+       },
+       'main': {
+         'entry': 'index.js'
+       }
+     }
+   }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin("styles.css"),

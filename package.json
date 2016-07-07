@@ -7,7 +7,7 @@
     "validate-webpack:dev": "webpack-validator webpack.config.js --env.dev",
     "validate-webpack:prod": "webpack-validator webpack.config.js --env.prod",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --config webpack.config.js",
     "eslint": "eslint src/ test/ *.js",
     "build": "webpack --config webpack.config.js"
   },
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "babel": "^6.5.2",
+    "css-loader": "^0.23.1",
     "eslint-loader": "^1.4.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.22.0",

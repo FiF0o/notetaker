@@ -1,5 +1,4 @@
 import React from 'react'
-
 /*
   Importing components here to be rendered depending on the route we are at
   in - App.js -
@@ -15,5 +14,4 @@ export default (
     <Route path="home" component={ Home }/>
   </Route>
 )
-
 // exporting Routes instructions for app js.
