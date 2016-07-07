@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 
 /*
   Importing components here to be rendered depending on the route we are at
