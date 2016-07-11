@@ -9,9 +9,18 @@
     "watch:test": "npm test --auto-watch --no-single-run",
     "validate-webpack:dev": "webpack-validator webpack.config.js --env.dev",
     "validate-webpack:prod": "webpack-validator webpack.config.js --env.prod",
+    "prestart": "npm run clean-and-copy",
     "start": "webpack-dev-server --config webpack.config.js",
-    "eslint": "eslint src/ test/ *.js",
-    "build": "webpack --config webpack.config.js"
+    "sasslint": "sass-lint -config .sass-lint.yml src/sass/*.sass --verbose --no-exit --ignore src/vendors/**",
+    "eslint": "eslint src/app/*.js",
+    "prebuild": "npm run clean-and-copy",
+    "prebuild:prod": "npm run clean-and-copy && mkdir public",
+    "build": "webpack --config webpack.config.js --env.prod -p",
+    "clean-and-copy": "npm run clean-public && npm run create-public && npm run copy-files",
+    "clean-public": "rimraf public",
+    "create-public": "mkdir public",
+    "copy-files": "cp src/favicon.ico public"
+
   },
   "author": "",
   "license": "ISC",
