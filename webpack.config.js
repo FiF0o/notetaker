@@ -17,7 +17,9 @@ module.exports = {
     app: path.format({
       dir: './app',
       base: 'App.js'
-    })
+    }),
+
+    // vendors: [''],
   },
   output: {
     path: path.join(__dirname, 'public'),
@@ -28,7 +30,7 @@ module.exports = {
     content is now served from /assets (public/assets)
     */
     // publicPath: '/assets/',
-    filename: "index.js"
+    filename: "index.[name].[chunkhash].js" // use caching
   },
   devtool: debug ? "inline-source-map" : null,
   eslint: {
@@ -80,6 +82,7 @@ module.exports = {
    }),
      // creates html file on the fly
    new HtmlWebpackPlugin({
+     template: './index.html',
      title: 'App title',
      filename: 'index.html',
     //  inject:'',
