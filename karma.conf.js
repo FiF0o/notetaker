@@ -1,7 +1,9 @@
 // Karma configuration
 // Generated on Sat Jul 09 2016 14:49:06 GMT+0100 (BST)
 const webpackConfig = require('./webpack.config')
-const fileGlob = 'src/app/**/*.test.js'
+const path = require('path')
+const testGlob = 'app/**/*.test.js'
+const fileGlob = 'app/**/*.js'
 
 
 process.env.BABEL_ENV = 'test'
@@ -10,7 +12,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: path.resolve(__dirname,'../src'),
 
 
     // frameworks to use - dependancies
@@ -20,7 +22,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      fileGlob
+      testGlob, fileGlob
     ],
 
 
@@ -33,6 +35,7 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       // bundles file through pre processors to be ready to use for test in web browsers
+      [testGlob]: ['webpack'],
       [fileGlob]: ['webpack'],
     },
     // config object for webpack to be run so that it can pre process files

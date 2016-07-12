@@ -1,10 +1,10 @@
-import React from 'react'
+const React = require('react');
 
-export default class Home extends React.Component {
+module.exports = class Home extends React.Component {
   render() {
     return (
     <h2 className="">
-      Search by Github Username Above
+     {this.props.title}
     </h2>
     )
   }

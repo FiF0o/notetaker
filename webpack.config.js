@@ -19,7 +19,7 @@ module.exports = {
       base: 'App.js'
     }),
 
-    // vendors: [''],
+    vendors: ['jquery', 'lodash']
   },
   output: {
     path: path.join(__dirname, 'public'),
