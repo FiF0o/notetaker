@@ -2,6 +2,7 @@ const webpack = require('webpack')
 
 const path = require('path')
 const sassLintPlugin = require('sasslint-webpack-plugin')
+const packageJson = require('./package.json')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -26,9 +27,9 @@ module.exports = {
     content is now served from /assets (public/assets)
     */
     // publicPath: '/assets/',
-    filename: "index.[name].js" // use caching
+    filename: "index.[name].[chunkhash].js" // use caching
   },
-  devtool: "inline-source-map",
+  devtool: null,
   eslint: {
     configFile: './.eslintrc'
   },
@@ -77,6 +78,7 @@ module.exports = {
      testing: false
    }),
      // creates html file on the fly
+      //TODO Add html template
    new HtmlWebpackPlugin({
      template: './index.html',
      title: 'App title',
@@ -94,6 +96,15 @@ module.exports = {
        }
      }
    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+    //     // used to create separate chunks of js to be transpiled - used for vendors (bower_components)
+        name: 'vendors',
+        filename: 'index.vendors.[chunkhash].js'
+    }),
     new ExtractTextPlugin("styles.css"),
+    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+    new webpack.DefinePlugin({ VERSION: JSON.stringify(packageJson.version) }),
   ]
 }

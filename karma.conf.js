@@ -1,87 +1,81 @@
-// Karma configuration
-// Generated on Sat Jul 09 2016 14:49:06 GMT+0100 (BST)
-const webpackConfig = require('./webpack.config')
-const path = require('path')
-const testGlob = 'app/**/*.test.js'
-const fileGlob = 'app/**/*.js'
+var webpack = require('karma-webpack');
+var webpackConfig = require('./webpack.config.test');
 
+// webpackConfig.module.loaders = [
+//   {
+//     test: /\.(js|jsx)$/, exclude: /(bower_components|node_modules)/,
+//     loader: 'babel-loader'
+//   }
+// ];
+// webpackConfig.module.postLoaders = [{
+//   test: /\.(js|jsx)$/, exclude: /(node_modules|bower_components|tests)/,
+//   loader: 'istanbul-instrumenter'
+// }];
 
-process.env.BABEL_ENV = 'test'
+// webpackConfig.resolve = {
+//   alias: [
+//     { _karma_webpack_: __dirname }
+//   ]
+// }
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
-
-    // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: path.resolve(__dirname,'../src'),
-
-
-    // frameworks to use - dependancies
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai'],
-
-
-    // list of files / patterns to load in the browser
+    basePath: __dirname,
+    frameworks: [
+      // '' 
+      'mocha',
+      'chai'
+    ],
     files: [
-      testGlob, fileGlob
+      // './node_modules/phantomjs-polyfill/bind-polyfill.js',
+      'src/app/**/*.js',
+      'src/app/**/*.test.js',
+      //   'src/test-context.js',
+
+      // { pattern: 'test-context.js', watched: false }
     ],
-
-
-    // list of files to exclude
-    exclude: [
+    plugins: [
+      webpack,
+      // 'karma-jasmine',
+      'karma-mocha',
+      'karma-chrome-launcher',
+      // 'karma-firefox-launcher',
+      // 'karma-phantomjs-launcher',
+      'karma-coverage',
+      'karma-spec-reporter',
+      'karma-chai'
     ],
-
-
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    browsers: [ 
+      // 'PhantomJS',
+      'Chrome'
+    ],
     preprocessors: {
-      // bundles file through pre processors to be ready to use for test in web browsers
-      [testGlob]: ['webpack'],
-      [fileGlob]: ['webpack'],
-    },
-    // config object for webpack to be run so that it can pre process files
-    webpack: webpackConfig,
-    webpackMiddleware: {noInfo: true},
+      '../src/app/**/*.js': ['webpack', ],
+      '../src/app/**/*.test.js': ['webpack', ]
 
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'], //added code covrage plugin to the report
-    coverageReport: {
-      reporter: [
-        {type: 'lcov', dir: 'coverage/', subdir: '.'},
-        {type: 'json', dir: 'coverage/', subdir: '.'},
-        {type: 'text-summary'}
+      // '../src/test-context.js': ['webpack'],
+    },
+    reporters: [ 
+      // 'spec', 
+      'progress',
+      'coverage' 
+    ],
+    coverageReporter: {
+      // dir: 'build/reports/coverage',
+      reporters: [ // reporter ?
+        { type: 'html', subdir: 'report-html' },
+        { type: 'lcov', subdir: 'report-lcov' },
+        { type: 'cobertura', subdir: '.', file: 'cobertura.txt' }
       ]
     },
+    webpack: webpackConfig,
 
-    // web server port
-    port: 9876,
-
-
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
-
-
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
-
-
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
-
-
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
-
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
+    webpackMiddleware: { noInfo: true },
+    concurrency: Infinity,
     singleRun: true,
-
-    // Concurrency level
-    // how many browser should be started simultaneous
-    concurrency: Infinity
-  })
-}
+    autoWatch: false,
+    logLevel: config.LOG_INFO,
+    colors: true,
+    port: 9876,
+  });
+};

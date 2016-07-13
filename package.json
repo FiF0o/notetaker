@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:2": "karma start",
+    "test:2": "karma start -c karma.conf.js",
     "test": "mocha --require babel-core/register src/**/*.test.js",
     "test:coverage": "istanbul cover _mocha -- --recursive --require babel-core/register src/**/*.test.*",
     "watch:test": "npm test --auto-watch --no-single-run",
@@ -16,7 +16,7 @@
     "eslint": "eslint src/app/*.js",
     "prebuild": "npm run clean-and-copy",
     "prebuild:prod": "npm run clean-and-copy && mkdir public",
-    "build": "webpack --config webpack.config.js --env.prod -p",
+    "build": "webpack --config webpack.config.production.js --env.prod -p",
     "clean-and-copy": "npm run clean-public && npm run create-public && npm run copy-files",
     "clean-public": "rimraf public",
     "create-public": "mkdir public",
