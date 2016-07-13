@@ -5,6 +5,7 @@ import React from 'react'
 */
 import Main from '../components/Main'
 import Home from '../components/Home'
+import Profile from '../components/Profile'
 
 // imports Route objects from react router to be used to render Routes
 import { Route, IndexRoute } from 'react-router'
@@ -12,6 +13,7 @@ import { Route, IndexRoute } from 'react-router'
 export default (
   <Route path="/" component={ Main }>
     <IndexRoute component={ Home } />
+    <Route path="profile/:username" component={ Profile } />
 
 
   </Route>
