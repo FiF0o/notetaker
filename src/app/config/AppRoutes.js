@@ -7,11 +7,14 @@ import Main from '../components/Main'
 import Home from '../components/Home'
 
 // imports Route objects from react router to be used to render Routes
-import { Route } from 'react-router'
+import { Route, IndexRoute } from 'react-router'
 
 export default (
   <Route path="/" component={ Main }>
-    <Route path="home" component={ Home }/>
+    <IndexRoute component={ Home } />
+
+
   </Route>
 )
 // exporting Routes instructions for app js.
+// IndexRoute is the component being rendered

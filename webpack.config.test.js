@@ -33,10 +33,10 @@ module.exports = {
         loaders: [
             {
                 test: /\.(js|jsx)$/, exclude: /(bower_components|node_modules)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'babel-preset-es2015-webpack',]
-                }
+                loaders: ['react-hot', 'babel-loader?presets[]=es2015&presets[]=react'],
+                // query: {
+                //     presets: ['es20215','react',]
+                // }
             },
             {
                 test: /\.(sass|scss)$/,

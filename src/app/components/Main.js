@@ -5,16 +5,21 @@ import React from 'react'
 export default class App extends React.Component {
   render() {
     return (
-      <div>
-        Main Component is here
+      <div className="main-container">
 
-        <div className="container">
-          <div className="col-md-6">"6"</div>
-          <div className="col-md-6">"6"</div>
-        </div>
-        <h1>I am a h1</h1>
-        <h2>I am a h2</h2>
+          <nav className="navbar navbar-default" role="navigation">
+            <div className="col-sm-7 col-sm-offset-2" style={{marginTop: 15}}>
+              MENU
+            </div>
+          </nav>
+
+          <div className="container">
+            {this.props.children}
+          </div>
+
       </div>
     )
   }
 }
+
+// this.props.children replaced by the active component
