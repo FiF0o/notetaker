@@ -2,13 +2,32 @@
  * Created by jonlazarini on 13/07/16.
  */ 
 import React from 'react'
-import { Router } from 'react-router'
+// import { Router } from 'react-router'
 
 import Repos from './Github/Repos'
 import UserProfile from './Github/UserProfile'
 import Notes from './Notes/Notes'
 
-export default class Profile extends React.Component {
+import firebase from 'firebase'
+import ReactFireMixin from 'reactfire'
+import reactMixin from 'react-mixin'
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBBBC2h-Aw_uHel1zmnDQiOmtCuwJIH8hE",
+  authDomain: "note-taker-b4d9c.firebaseapp.com",
+  databaseURL: "https://note-taker-b4d9c.firebaseio.com",
+  storageBucket: "note-taker-b4d9c.appspot.com",
+};
+const fbAppRef = firebase.initializeApp(firebaseConfig);
+
+// import Rebase from 're-base'
+// const rebase = Rebase.createClass(firebaseConfig.databaseURL)
+// console.log('rebase ', rebase)
+
+//TODO Fix Firebase & React Mixin ES6 syntax - https://gist.github.com/kulakowka/24bb83775358ad4c3bc7
+
+class Profile extends React.Component {
+  
   constructor() {
     super();
     
@@ -18,17 +37,36 @@ export default class Profile extends React.Component {
         name: 'Jon Laz'
       },
       repos: ['a', 'b', 'c']
-    }
+    };
     
   }
-  componentWillMount() {
-    
-  }
-  // this.props access from parents VS this.state to acess current
 
+  componentDidMount() {
+    // Access child  by referencing root and passing down the username from
+    // the root
+    const dbUsername = this.props.params.username
+
+    /*
+    new instance of firebase
+    retrieves endpoint / root : https://note-taker-b4d9c.firebaseio.com and pass username
+    to access child of firebase
+    */
+    const ref = fbAppRef.database().ref(dbUsername)
+
+    // Here we bind the component to Firebase and it handles all data
+    // updates to the notes state - this.state.notes,
+    // no need to poll as in the React example.
+    this.bindAsArray(ref, 'notes')
+    
+  }
+  componentWillUnmount() {
+    //removes listener and binding
+    this.unbind('notes')
+  }
+
+  // this.props access from parents VS this.state to access current
   // this.props.params is passed down by the router to the component
   render() {
-    console.log(this.props)
     return (
       <div className="row">
         <div className="col-md-4">
@@ -37,14 +75,17 @@ export default class Profile extends React.Component {
         </div>
         <div className="col-md-4">
           Repos Component
-          <Repos repos={this.state.repos} />
+          <Repos username={ this.props.params.username } repos={this.state.repos} />
         </div>
         <div className="col-md-4">
           Notes Component
-          <Notes notes={this.state.notes}/>
+          <Notes username={ this.props.params.username } notes={this.state.notes}/>
         </div>
       </div>
     )
   }
 }
 
+reactMixin(Profile.prototype, ReactFireMixin)
+
+export default Profile

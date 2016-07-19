@@ -2,6 +2,7 @@
  * Created by jonlazarini on 13/07/16.
  */
 import React from 'react'
+import NoteList from './NoteList'
 
 export default class Note extends React.Component {
   constructor() {
@@ -16,11 +17,15 @@ export default class Note extends React.Component {
   }
 
   render() {
-
+   // passed from from Profile to Notes to NoteList components
+    console.log('Notes: ', this.props.notes)
     return (
       <div>
+        <h3>Notes for { this.props.username }</h3>
+        
         <p>NOTES:</p>
-        <p>{ this.props.notes }</p>
+        <NoteList notes={ this.props.notes }/>
+        
       </div>
     )
   }
