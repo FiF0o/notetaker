@@ -2,7 +2,6 @@
  * Created by jonlazarini on 13/07/16.
  */ 
 import React from 'react'
-// import { Router } from 'react-router'
 
 import Repos from './Github/Repos'
 import UserProfile from './Github/UserProfile'
@@ -38,12 +37,11 @@ class Profile extends React.Component {
       },
       repos: ['a', 'b', 'c']
     };
-    
   }
 
   componentDidMount() {
-    // Access child  by referencing root and passing down the username from
-    // the root
+    /* Access child  by referencing root and passing down the username from
+     the root */
     const dbUsername = this.props.params.username
 
     /*
@@ -64,8 +62,8 @@ class Profile extends React.Component {
     this.unbind('notes')
   }
 
-  // this.props access from parents VS this.state to access current
-  // this.props.params is passed down by the router to the component
+  /* this.props access from parents VS this.state to access current
+   this.props.params is passed down by the router to the component */
   render() {
     return (
       <div className="row">
@@ -79,11 +77,30 @@ class Profile extends React.Component {
         </div>
         <div className="col-md-4">
           Notes Component
-          <Notes username={ this.props.params.username } notes={this.state.notes}/>
+          <Notes
+            username={ this.props.params.username }
+            notes={ this.state.notes }
+            addNote={ this._handleAddNote.bind(this) }
+          />
         </div>
       </div>
     )
   }
+  /*
+  * function passed down to the notes component
+  * notes state bound to the username endpoint,
+  * when endpoint is updated, changes are pushed to our state
+   */
+  _handleAddNote(newNote) {
+
+    //updates firebase database with the newNote
+    console.log(`${this.props.params.username}/${this.state.notes.length}`)
+    console.log('this.state.note.length', this.state.notes.length)
+    // goes to root then /username then /items in the array, then append newNote
+    fbAppRef.database().ref(`${this.props.params.username}/${this.state.notes.length}`).set(newNote)
+
+  }
+
 }
 
 reactMixin(Profile.prototype, ReactFireMixin)
