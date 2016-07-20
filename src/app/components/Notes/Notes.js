@@ -4,7 +4,7 @@
 import React from 'react'
 import NoteList from './NoteList'
 
-export default class Note extends React.Component {
+export default class Notes extends React.Component {
   constructor() {
     super();
 
@@ -17,7 +17,7 @@ export default class Note extends React.Component {
   }
 
   render() {
-   // passed from from Profile to Notes to NoteList components
+   // notes passed from from Profile to Notes to NoteList components
     console.log('Notes: ', this.props.notes)
     return (
       <div>
@@ -29,4 +29,14 @@ export default class Note extends React.Component {
       </div>
     )
   }
+}
+
+Notes.propTypes = {
+  username: React.PropTypes.string.isRequired,
+  notes: React.PropTypes.array.isRequired,
+
+}
+
+Notes.defaultProps = {
+
 }

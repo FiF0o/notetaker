@@ -30,3 +30,15 @@ export default class Repos extends React.Component {
   }
 }
 
+/*
+* props required on the component Repos when created
+*/
+Repos.propTypes = {
+  username: React.PropTypes.string.isRequired,
+  repos: React.PropTypes.array.isRequired,
+
+}
+
+Repos.defaultProps = {
+
+}
