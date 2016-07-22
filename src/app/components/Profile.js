@@ -65,6 +65,7 @@ class Profile extends React.Component {
   /* this.props access from parents VS this.state to access current
    this.props.params is passed down by the router to the component */
   render() {
+    console.log('this.props ', this.props)
     return (
       <div className="row">
         <div className="col-md-4">
@@ -96,7 +97,9 @@ class Profile extends React.Component {
     //updates firebase database with the newNote
     console.log(`${this.props.params.username}/${this.state.notes.length}`)
     console.log('this.state.note.length', this.state.notes.length)
-    // goes to root then /username then /items in the array, then append newNote
+    // goes to root then /username then /numberofitems (as a key) in the array,
+    // then
+    // newNote is appended to it
     fbAppRef.database().ref(`${this.props.params.username}/${this.state.notes.length}`).set(newNote)
 
   }

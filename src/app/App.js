@@ -18,15 +18,3 @@ ReactDOM.render(
   </Router>
   , appEntry
 )
-
-// <script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
-//   <script>
-// // Initialize Firebase
-// var config = {
-//   apiKey: "AIzaSyBBBC2h-Aw_uHel1zmnDQiOmtCuwJIH8hE",
-//   authDomain: "note-taker-b4d9c.firebaseapp.com",
-//   databaseURL: "https://note-taker-b4d9c.firebaseio.com",
-//   storageBucket: "",
-// };
-// firebase.initializeApp(config);
-// </script>
