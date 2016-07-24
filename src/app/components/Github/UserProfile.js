@@ -17,7 +17,7 @@ export default class UserProfile extends React.Component {
   }
 
   render() {
-
+    console.log('BIO: ', this.props.bio)
     return (
       <div>
         <p>USER PROFILE:</p>

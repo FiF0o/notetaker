@@ -33,9 +33,9 @@ export default class AddNote extends React.Component {
     setRef -> handleSubmit
     */
     const note = this._note
-    console.log('note ', note)
+    // console.log('note ', note)
     const newNote = note.value // grabbing value of this.note
-    console.log(newNote)
+    // console.log(newNote)
     note.value = '' // clears input field
     this.props.addNote(newNote) // calling function from prop of Profile
     // component which is a func - handleAddNote()

@@ -11,6 +11,9 @@ import firebase from 'firebase'
 import ReactFireMixin from 'reactfire'
 import reactMixin from 'react-mixin'
 
+import helpers from '../utils/helpers'
+console.log('helpers: ', helpers)
+
 const firebaseConfig = {
   apiKey: "AIzaSyBBBC2h-Aw_uHel1zmnDQiOmtCuwJIH8hE",
   authDomain: "note-taker-b4d9c.firebaseapp.com",
@@ -33,10 +36,11 @@ class Profile extends React.Component {
     this.state = {
       notes: [1, 2, 3],
       bio: {
-        name: 'Jon Laz'
+        // name: 'Jon Laz'
       },
-      repos: ['a', 'b', 'c']
-    };
+      repos: []
+    }
+
   }
 
   componentDidMount() {
@@ -55,7 +59,20 @@ class Profile extends React.Component {
     // updates to the notes state - this.state.notes,
     // no need to poll as in the React example.
     this.bindAsArray(ref, 'notes')
-    
+
+
+    helpers.getGithubInfo(dbUsername)
+     // returns a promise that will be used to populate state of the
+           // component with the array of promises returning objects
+      .then(function(data) {
+        return this.setState({
+          bio: data.bio,
+          repos: data.repos
+        })
+        /* specify the (this) context of the new function  by
+         referring it to the component instead of the context of the new
+         func (window/global) */
+      }.bind(this))
   }
   componentWillUnmount() {
     //removes listener and binding
@@ -93,19 +110,19 @@ class Profile extends React.Component {
   * when endpoint is updated, changes are pushed to our state
    */
   _handleAddNote(newNote) {
-
+    // console.log(`${this.props.params.username}/${this.state.notes.length}`)
+    // console.log('this.state.note.length', this.state.notes.length)
+    
     //updates firebase database with the newNote
-    console.log(`${this.props.params.username}/${this.state.notes.length}`)
-    console.log('this.state.note.length', this.state.notes.length)
-    // goes to root then /username then /numberofitems (as a key) in the array,
-    // then
-    // newNote is appended to it
+    /* goes to root then /username then /numberofitems (as a key) in the array, then newNote is appended to it */
     fbAppRef.database().ref(`${this.props.params.username}/${this.state.notes.length}`).set(newNote)
 
   }
 
 }
 
+
+//TODO get rid off reactMixin & ReactFire
 reactMixin(Profile.prototype, ReactFireMixin)
 
 export default Profile

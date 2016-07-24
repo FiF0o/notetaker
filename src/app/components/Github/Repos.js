@@ -20,6 +20,7 @@ export default class Repos extends React.Component {
   }
 
   render() {
+    console.log('repos: ', this.props.repos)
 
     return (
       <div>
