@@ -3,13 +3,13 @@
  */
 
 import React from 'react'
-import { hashHistory } from 'react-router'
-console.log('browserHistory ', hashHistory) //
 
+import { hashHistory } from 'react-router'/* use hashHistory from
+ Router (used in App as well) */
 class SearchGithub extends React.Component {
 
   render() {
-    console.log('this.props ', this.props)
+    // console.log('this.props ', this.props)
     return (
       <div className="col-sm-12">
         <form action="" onSubmit={ this._handleSubmit.bind(this) }>
@@ -23,11 +23,9 @@ class SearchGithub extends React.Component {
       </div>
     )
   }
-  _handleSubmit(e) {
-    console.log('e ', e)
+  _handleSubmit() {
     // e.preventDefault()
     const username = this._username.value
-    console.log('username ',username)
     this._username = ''
 
     /*
@@ -35,14 +33,10 @@ class SearchGithub extends React.Component {
     taking amy properties on the React.History module object and adding it to
      our instance of SearchGithub
     */
-    console.log(this)
-    console.log('this.browserHistory ', hashHistory)
-    console.log(`profile/${username}`)
-    hashHistory.replace(`profile/${username}`) // transition to a new route
+    // console.log(`profile/${username}`)
+    hashHistory.push(`profile/${username}`) // transition to a new route
 
   }
 }
-
-// reactMixin(SearchGithub.prototype, Router.History)
 
 export default SearchGithub

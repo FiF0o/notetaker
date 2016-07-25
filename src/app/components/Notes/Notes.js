@@ -22,7 +22,7 @@ export default class Notes extends React.Component {
     console.log('Notes: ', this.props.notes)
     return (
       <div>
-        <h3>Notes for { this.props.username }</h3>
+        <h3>Notes for: { this.props.username }</h3>
         <AddNote 
           username={ this.props.username } 
           addNote={ this.props.addNote } 

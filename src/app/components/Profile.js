@@ -8,11 +8,11 @@ import UserProfile from './Github/UserProfile'
 import Notes from './Notes/Notes'
 
 import firebase from 'firebase'
+// integrate firebase data into react with mixin
 import ReactFireMixin from 'reactfire'
 import reactMixin from 'react-mixin'
 
 import helpers from '../utils/helpers'
-console.log('helpers: ', helpers)
 
 const firebaseConfig = {
   apiKey: "AIzaSyBBBC2h-Aw_uHel1zmnDQiOmtCuwJIH8hE",
@@ -86,15 +86,12 @@ class Profile extends React.Component {
     return (
       <div className="row">
         <div className="col-md-4">
-          User Profile Component { this.props.params.username }
           <UserProfile username={ this.props.params.username } bio={this.state.bio} />
         </div>
         <div className="col-md-4">
-          Repos Component
           <Repos username={ this.props.params.username } repos={this.state.repos} />
         </div>
         <div className="col-md-4">
-          Notes Component
           <Notes
             username={ this.props.params.username }
             notes={ this.state.notes }
