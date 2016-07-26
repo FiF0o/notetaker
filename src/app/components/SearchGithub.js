@@ -23,8 +23,8 @@ class SearchGithub extends React.Component {
       </div>
     )
   }
-  _handleSubmit() {
-    // e.preventDefault()
+  _handleSubmit(e) {
+    e.preventDefault()
     const username = this._username.value
     this._username = ''
 
@@ -34,7 +34,7 @@ class SearchGithub extends React.Component {
      our instance of SearchGithub
     */
     // console.log(`profile/${username}`)
-    hashHistory.push(`profile/${username}`) // transition to a new route
+    hashHistory.push(`/profile/${username}`) // transition to a new route
 
   }
 }

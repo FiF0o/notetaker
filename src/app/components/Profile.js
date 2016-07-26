@@ -29,7 +29,7 @@ const fbAppRef = firebase.initializeApp(firebaseConfig);
 //TODO Fix Firebase & React Mixin ES6 syntax - https://gist.github.com/kulakowka/24bb83775358ad4c3bc7
 
 class Profile extends React.Component {
-  
+
   constructor() {
     super();
     
@@ -38,22 +38,23 @@ class Profile extends React.Component {
       bio: {
         // name: 'Jon Laz'
       },
-      repos: []
+      repos: [],
+      
     }
 
   }
 
-  componentDidMount() {
+  _initData(username) {  // creates a listener to query the data
     /* Access child  by referencing root and passing down the username from
      the root */
-    const dbUsername = this.props.params.username
+    // const dbUsername = this.props.params.username
 
     /*
-    new instance of firebase
-    retrieves endpoint / root : https://note-taker-b4d9c.firebaseio.com and pass username
-    to access child of firebase
-    */
-    const ref = fbAppRef.database().ref(dbUsername)
+     new instance of firebase
+     retrieves endpoint / root : https://note-taker-b4d9c.firebaseio.com and pass username
+     to access child of firebase
+     */
+    const ref = fbAppRef.database().ref(username)
 
     // Here we bind the component to Firebase and it handles all data
     // updates to the notes state - this.state.notes,
@@ -61,22 +62,37 @@ class Profile extends React.Component {
     this.bindAsArray(ref, 'notes')
 
 
-    helpers.getGithubInfo(dbUsername)
-     // returns a promise that will be used to populate state of the
+    helpers.getGithubInfo(username)
+           // returns a promise that will be used to populate state of the
            // component with the array of promises returning objects
-      .then(function(data) {
-        return this.setState({
-          bio: data.bio,
-          repos: data.repos
-        })
-        /* specify the (this) context of the new function  by
-         referring it to the component instead of the context of the new
-         func (window/global) */
-      }.bind(this))
+           .then(function(data) {
+             return this.setState({
+               bio: data.bio,
+               repos: data.repos
+             })
+             /* specify the (this) context of the new function  by
+              referring it to the component instead of the context of the new
+              func (window/global) */
+           }.bind(this))
   }
-  componentWillUnmount() {
+  componentDidMount() {
+    // console.log('componentDidMount this.props.params.username: ', this.props.params.username)
+    this._initData(this.props.params.username) // this.props.params.username
+    // will be passed down when cb _initData() is invoked
+
+  }
+  componentWillReceiveProps(nextProps) {
     //removes listener and binding
     this.unbind('notes')
+    /* page doesn't refresh when props are received to go to a new route,
+     and the routing is going to props so the function will be invoked
+     nextProps will be used to pass down the new props */
+    console.log('the nextProps are: ', nextProps)
+    this._initData(nextProps.params.username)
+
+  }
+
+  componentWillUnmount() {
   }
 
   /* this.props access from parents VS this.state to access current
