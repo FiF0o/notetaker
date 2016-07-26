@@ -21,7 +21,8 @@ export default class Repos extends React.Component {
 
   render() {
     console.log('repos: ', this.props.repos)
-    const repos = this.props.repos.map((repo, index) => {
+    const listRepos = this.props
+    const repos = listRepos.repos.map((repo, index) => {
       return (
         <li className='list-group-item' key={ index }>
           { /* js if statement */ }

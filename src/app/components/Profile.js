@@ -65,15 +65,13 @@ class Profile extends React.Component {
    getGithubInfo(username)
            // returns a promise that will be used to populate state of the
            // component with the array of promises returning objects
-           .then(function(data) {
+           .then((data) => { // use fat arrow to get the right this context,
+             // the object itself
              return this.setState({
                bio: data.bio,
                repos: data.repos
              })
-             /* specify the (this) context of the new function  by
-              referring it to the component instead of the context of the new
-              func (window/global) */
-           }.bind(this))
+           })
   }
   componentDidMount() {
     // console.log('componentDidMount this.props.params.username: ', this.props.params.username)

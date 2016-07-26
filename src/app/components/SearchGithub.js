@@ -9,22 +9,24 @@ import { hashHistory } from 'react-router'/* use hashHistory from
 class SearchGithub extends React.Component {
 
   render() {
-    // console.log('this.props ', this.props)
+    // passed down from Main (which is handled by the Router) Component to be
+    // used in Mixin
+    console.log('this.props.history: ', this.props.history)
     return (
       <div className="col-sm-12">
-        <form action="" onSubmit={ this._handleSubmit.bind(this) }>
+        <form action="" onSubmit={ () => this._handleSubmit() }>
           <div className="form-group col-sm-7">
             <input type="text" className="form-control" ref={ (input) => this._username = input }/>
           </div>
           <div className="form-group col-sm-5">
             <button type="submit" className="btn btn-block btn-primary">Search Github</button>
           </div>
-        </form>
+        </form>xx
       </div>
     )
   }
-  _handleSubmit(e) {
-    e.preventDefault()
+  _handleSubmit() {
+    // e.preventDefault()
     const username = this._username.value
     this._username = ''
 
@@ -34,9 +36,15 @@ class SearchGithub extends React.Component {
      our instance of SearchGithub
     */
     // console.log(`profile/${username}`)
-    hashHistory.push(`/profile/${username}`) // transition to a new route
+    this.props.history.push(`/profile/${username}`) // transition to a new
+    // route,
+    // history props is passed down from Main which handled by the Router
 
   }
+}
+
+SearchGithub.PropTypes = {
+  history: React.PropTypes.object.isRequired,
 }
 
 export default SearchGithub
