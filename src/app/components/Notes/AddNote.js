@@ -24,8 +24,8 @@ export default class AddNote extends React.Component {
     )
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
+  handleSubmit() {
+    // e.preventDefault()
     /*
     note is coming from setRef func - created on the fly
     setRef -> handleSubmit

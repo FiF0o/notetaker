@@ -67,7 +67,7 @@ class Profile extends React.Component {
            // component with the array of promises returning objects
            .then((data) => { // use fat arrow to get the right this context,
              // the object itself
-             return this.setState({
+             this.setState({
                bio: data.bio,
                repos: data.repos
              })
