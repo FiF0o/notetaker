@@ -8,8 +8,8 @@ export default class NoteList extends React.Component {
   // firebase returns a .value value from the key/value pairs that we access
   render() {
 
-
-    const notes = this.props.notes.map((note, index) => {
+    const { notes } = this.props
+    const listNotes = notes.map((note, index) => {
       return (
         <li className="list-group-item" key={ index }>
           { note['.value'] }
@@ -19,7 +19,7 @@ export default class NoteList extends React.Component {
 
     return (
           <ul className="list-group">
-            { notes }
+            { listNotes }
           </ul>
     )
   }

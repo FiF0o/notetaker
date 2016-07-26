@@ -6,8 +6,6 @@ import React from 'react'
 export default class AddNote extends React.Component {
   constructor() {
     super()
-
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   render() {
@@ -18,7 +16,7 @@ export default class AddNote extends React.Component {
       <div className="input-group">
         <input type="text" className="form-control" placeholder="Add New Note" ref={ (input) => this._note = input }/>
         <span className="input-group-btn">
-          <button className="btn btn-default" type="button" onClick={ this.handleSubmit }>
+          <button className="btn btn-default" type="button" onClick={ () => this.handleSubmit() }>
             Submit
           </button>
         </span>
