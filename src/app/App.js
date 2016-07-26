@@ -1,7 +1,7 @@
 import jQuery from 'jquery'
 import React from 'react'
 import ReactDOM from 'react-dom'
-//imports components as properties of the object
+//imports components as properties of the object - name imports {}
 import { Router, hashHistory } from 'react-router'
 import AppRoutes from './config/AppRoutes'
 

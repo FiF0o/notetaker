@@ -12,7 +12,7 @@ import firebase from 'firebase'
 import ReactFireMixin from 'reactfire'
 import reactMixin from 'react-mixin'
 
-import helpers from '../utils/helpers'
+import getGithubInfo from '../utils/helpers'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBBBC2h-Aw_uHel1zmnDQiOmtCuwJIH8hE",
@@ -62,7 +62,7 @@ class Profile extends React.Component {
     this.bindAsArray(ref, 'notes')
 
 
-    helpers.getGithubInfo(username)
+   getGithubInfo(username)
            // returns a promise that will be used to populate state of the
            // component with the array of promises returning objects
            .then(function(data) {

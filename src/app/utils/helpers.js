@@ -23,22 +23,18 @@ function getUserInfo(username) {
 //   console.log(data)
 // })
 
-const helpers = {
-  getGithubInfo: function(username) {
-    // get axios.all gets an array of promises
-    return axios.all([getRepos(username), getUserInfo(username)])
-      // wait for both promises to be resolves and pass arr of Data
-      .then(function(arrData) {
-        // first item is userRepo and second is bio
-        return { // object with repos and bio
-          repos: arrData[0].data, // accessing .data to return the objects
-          // only an not the whole promise
-          bio: arrData[1].data
-        }
-      })
+
+export default function getGithubInfo(username) {
+  // get axios.all gets an array of promises
+  return axios.all([getRepos(username), getUserInfo(username)])
+    // wait for both promises to be resolves and pass arr of Data
+    .then((arrData) => ({
+      /* arrow function to remove .bind(this) and preserve teh context
+       object with repos and bio and returns an object */
+        repos: arrData[0].data, // accessing .data to return the objects
+        // only an not the whole promise
+        bio: arrData[1].data
+      }))
+  // first item is userRepo and second is bio
   }
 
-}
-// console.log(helpers)
-
-export default helpers
