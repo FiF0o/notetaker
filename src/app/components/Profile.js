@@ -7,10 +7,10 @@ import Repos from './Github/Repos'
 import UserProfile from './Github/UserProfile'
 import Notes from './Notes/Notes'
 
-import firebase from 'firebase'
+// import firebase from 'firebase'
 // integrate firebase data into react with mixin
-import ReactFireMixin from 'reactfire'
-import reactMixin from 'react-mixin'
+// import ReactFireMixin from 'reactfire'
+// import reactMixin from 'react-mixin'
 
 import getGithubInfo from '../utils/helpers'
 
@@ -20,21 +20,20 @@ const firebaseConfig = {
   databaseURL: "https://note-taker-b4d9c.firebaseio.com",
   storageBucket: "note-taker-b4d9c.appspot.com",
 };
-const fbAppRef = firebase.initializeApp(firebaseConfig);
+// const fbAppRef = firebase.initializeApp(firebaseConfig);
 
-// import Rebase from 're-base'
-// const rebase = Rebase.createClass(firebaseConfig.databaseURL)
-// console.log('rebase ', rebase)
+import Rebase from 're-base'
+const base = Rebase.createClass(firebaseConfig.databaseURL)
 
 //TODO Fix Firebase & React Mixin ES6 syntax - https://gist.github.com/kulakowka/24bb83775358ad4c3bc7
 
 class Profile extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     
     this.state = {
-      notes: [1, 2, 3],
+      notes: [],
       bio: {
         // name: 'Jon Laz'
       },
@@ -48,18 +47,22 @@ class Profile extends React.Component {
     /* Access child  by referencing root and passing down the username from
      the root */
     // const dbUsername = this.props.params.username
-
+    this._base = base.bindToState(username, {
+      context: this,
+      asArray: true,
+      state: 'notes'
+    })
     /*
      new instance of firebase
      retrieves endpoint / root : https://note-taker-b4d9c.firebaseio.com and pass username
      to access child of firebase
      */
-    const ref = fbAppRef.database().ref(username)
+    // const ref = fbAppRef.database().ref(username)
 
     // Here we bind the component to Firebase and it handles all data
     // updates to the notes state - this.state.notes,
     // no need to poll as in the React example.
-    this.bindAsArray(ref, 'notes')
+    // this.bindAsArray(ref, 'notes')
 
 
    getGithubInfo(username)
@@ -81,7 +84,7 @@ class Profile extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     //removes listener and binding
-    this.unbind('notes')
+    base.removeBinding(this._base)
     /* page doesn't refresh when props are received to go to a new route,
      and the routing is going to props so the function will be invoked
      nextProps will be used to pass down the new props */
@@ -91,11 +94,13 @@ class Profile extends React.Component {
   }
 
   componentWillUnmount() {
+    base.removeBinding(this._base)
   }
 
   /* this.props access from parents VS this.state to access current
    this.props.params is passed down by the router to the component */
   render() {
+    console.log('THIS: ', this)
     console.log('this.props ', this.props)
     return (
       <div className="row">
@@ -109,7 +114,7 @@ class Profile extends React.Component {
           <Notes
             username={ this.props.params.username }
             notes={ this.state.notes }
-            addNote={ this._handleAddNote.bind(this) }
+            addNote={ (newNote) => this._handleAddNote(newNote) }
           />
         </div>
       </div>
@@ -126,14 +131,17 @@ class Profile extends React.Component {
     
     //updates firebase database with the newNote
     /* goes to root then /username then /numberofitems (as a key) in the array, then newNote is appended to it */
-    fbAppRef.database().ref(`${this.props.params.username}/${this.state.notes.length}`).set(newNote)
+    // fbAppRef.database().ref(`${this.props.params.username}/${this.state.notes.length}`).set(newNote)
+    base.post(this.props.params.username, {
+      data: this.state.notes.concat([newNote])
+    })
 
   }
 
 }
-
-
-//TODO get rid off reactMixin & ReactFire
-reactMixin(Profile.prototype, ReactFireMixin)
+//
+//
+// //TODO get rid off reactMixin & ReactFire
+// reactMixin(Profile.prototype, ReactFireMixin)
 
 export default Profile
