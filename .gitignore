@@ -3,3 +3,4 @@ npm-debug.log
 public/
 .idea/
 coverage/
+src/app/config/configToken.js

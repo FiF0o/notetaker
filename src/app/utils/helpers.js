@@ -2,19 +2,26 @@
  * Created by jonlazarini on 24/07/16.
  */
 import axios from 'axios'
+import { token } from '../config/configToken' // gets token for 5000 limit
+// requests per hours
+
 // console.log('axios: ', axios)
 
 const GITHUB_URL = 'https://api.github.com'
 
 function getRepos(username) {
   // console.log(`${GITHUB_URL}/users/${username}/repos`)
-  return axios.get(`${GITHUB_URL}/users/${username}/repos`)
+  return axios.get(`${GITHUB_URL}/users/${username}/repos`, {
+    params: { token }
+  })
 }
 
 
 function getUserInfo(username) {
   // console.log(`${GITHUB_URL}/users/${username}`)
-  return axios.get(`${GITHUB_URL}/users/${username}`)
+  return axios.get(`${GITHUB_URL}/users/${username}`, {
+    params: { token }
+  })
 }
 
 // const promiseObj = getRepos('fif0o')
