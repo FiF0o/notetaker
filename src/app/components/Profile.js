@@ -25,8 +25,6 @@ const firebaseConfig = {
 import Rebase from 're-base'
 const base = Rebase.createClass(firebaseConfig.databaseURL)
 
-//TODO Fix Firebase & React Mixin ES6 syntax - https://gist.github.com/kulakowka/24bb83775358ad4c3bc7
-
 class Profile extends React.Component {
 
   constructor(props) {
@@ -100,8 +98,8 @@ class Profile extends React.Component {
   /* this.props access from parents VS this.state to access current
    this.props.params is passed down by the router to the component */
   render() {
+    console.log('firebase: ' , base)
     console.log('THIS: ', this)
-    console.log('this.props ', this.props)
     return (
       <div className="row">
         <div className="col-md-4">

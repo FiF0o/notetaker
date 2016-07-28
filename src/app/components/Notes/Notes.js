@@ -19,7 +19,7 @@ export default class Notes extends React.Component {
 
   render() {
    // notes passed from from Profile to Notes to NoteList components
-    console.log('Notes: ', this.props.notes)
+
     return (
       <div>
         <h3>Notes for: { this.props.username }</h3>
