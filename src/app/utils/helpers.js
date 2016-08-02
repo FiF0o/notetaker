@@ -69,3 +69,15 @@ export default function getGithubInfo(username) {
   // first item is userRepo and second is bio
   }
 
+// require the module
+import Hashes from 'jshashes'
+console.log('Hashes: ', Hashes)
+// sample string
+// const str = 'This is a sample text!'
+// new SHA1 instance and base64 string encoding
+const SHA1 = new Hashes.SHA1().b64({token})
+// output to console
+console.log('SHA1: ',  SHA1)
+
+var hashedGithubToken = getToken(SHA1)
+console.log('hashedGithubToken: ', hashedGithubToken)

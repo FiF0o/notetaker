@@ -1,4 +1,4 @@
-var webpack = require('karma-webpack');
+// var webpack = require('karma-webpack');
 var webpackConfig = require('./webpack.config.test');
 
 // webpackConfig.module.loaders = [
@@ -20,7 +20,7 @@ var webpackConfig = require('./webpack.config.test');
 
 module.exports = function (config) {
   config.set({
-    basePath: __dirname,
+    basePath: '',
     frameworks: [
       // '' 
       'mocha',
@@ -28,15 +28,16 @@ module.exports = function (config) {
     ],
     files: [
       // './node_modules/phantomjs-polyfill/bind-polyfill.js',
-      'src/app/**/*.js',
+      //'src/app/App.js',
       'src/app/**/*.test.js',
       //   'src/test-context.js',
 
       // { pattern: 'test-context.js', watched: false }
     ],
     plugins: [
-      webpack,
+      // webpack,
       // 'karma-jasmine',
+      'karma-webpack',
       'karma-mocha',
       'karma-chrome-launcher',
       // 'karma-firefox-launcher',
@@ -50,23 +51,23 @@ module.exports = function (config) {
       'Chrome'
     ],
     preprocessors: {
-      '../src/app/**/*.js': ['webpack', ],
-      '../src/app/**/*.test.js': ['webpack', ]
+      //'src/app/App.js': ['webpack', ],
+      'src/app/**/*.test.js': ['webpack', ]
 
       // '../src/test-context.js': ['webpack'],
     },
     reporters: [ 
       // 'spec', 
-      'progress',
-      'coverage' 
+      // 'progress',
+      // 'coverage' 
     ],
     coverageReporter: {
       // dir: 'build/reports/coverage',
-      reporters: [ // reporter ?
-        { type: 'html', subdir: 'report-html' },
-        { type: 'lcov', subdir: 'report-lcov' },
-        { type: 'cobertura', subdir: '.', file: 'cobertura.txt' }
-      ]
+      // reporters: [ // reporter ?
+      //   { type: 'html', subdir: 'report-html' },
+      //   { type: 'lcov', subdir: 'report-lcov' },
+      //   { type: 'cobertura', subdir: '.', file: 'cobertura.txt' }
+      // ]
     },
     webpack: webpackConfig,
 
