@@ -29,7 +29,7 @@ module.exports = function (config) {
     files: [
       // './node_modules/phantomjs-polyfill/bind-polyfill.js',
       //'src/app/App.js',
-      'src/app/**/*.test.js',
+      'src/app/components/__test/**/*.test.js',
       //   'src/test-context.js',
 
       // { pattern: 'test-context.js', watched: false }
@@ -52,7 +52,7 @@ module.exports = function (config) {
     ],
     preprocessors: {
       //'src/app/App.js': ['webpack', ],
-      'src/app/**/*.test.js': ['webpack', ]
+      'src/app/components/__test/**/*.test.js': ['webpack', ]
 
       // '../src/test-context.js': ['webpack'],
     },

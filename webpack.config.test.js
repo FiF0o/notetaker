@@ -4,14 +4,21 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    context: path.join(__dirname, 'src'),
+    // context: __dirname,
+    context: __dirname,
     devtool: 'sourcemap',
+    // entry: {
+    //     'index':'/src/app/App.js',
+    // },
     entry: {
-        'index':'./app/App.js',
+        app: path.join(__dirname, "src/app/App.js")
     },
     output: {
         path: __dirname + '/dist/',
-        filename: 'index.js'
+        filename: 'index.js',
+        
+        // added publicPath
+        // publicPath: "./"
     },
     module: {
         loaders: [
@@ -25,7 +32,11 @@ module.exports = {
                     "sass-loader?sourceMap"
                 ],
                 exclude: [/vendors/, /bower_components/]
-            }
+            },
+            // { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
+            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
+          
         ]
     },
     plugins: [
