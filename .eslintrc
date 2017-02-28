@@ -1,6 +1,6 @@
 {
   "ecmaFeatures": {
-    "jsx": true
+    "jsx": true,
   },
   "plugins": [
     "react"
