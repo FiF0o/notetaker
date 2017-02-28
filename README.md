@@ -21,7 +21,7 @@ The file must:
 ## Serving files
 
 `npm run build`
-App deployed: [notetaker](omniscient-night.surge.sh)
+App deployed: [http://omniscient-night.surge.sh/](http://omniscient-night.surge.sh/)
 
 
 ## Todo
