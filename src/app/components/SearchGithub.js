@@ -9,8 +9,6 @@ class SearchGithub extends React.Component {
   render() {
     // passed down from Main (which is handled by the Router) Component to be
     // used in Mixin
-    console.log('this.props.history: ', this.props.history)
-    console.log('this.context: ', this.context)
     return (
       <div className="col-sm-12">
         <form action="" onSubmit={ () => this._handleSubmit() }>
@@ -34,7 +32,6 @@ class SearchGithub extends React.Component {
     taking amy properties on the React.History module object and adding it to
      our instance of SearchGithub
     */
-    // console.log(`profile/${username}`)
     this.context.router.push(`/profile/${username}`)
     // transition to a new route passed down via router in the context obj,
 

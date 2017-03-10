@@ -5,8 +5,7 @@ module.exports = class Home extends React.Component {
     return (
         <div>
           <h2 className="text-center">
-           {this.props.title}
-          Search by Github Username Above
+            Search by Github Username Above
           </h2>
         </div>
     )

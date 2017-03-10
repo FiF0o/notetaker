@@ -10,7 +10,6 @@ export default class App extends React.Component {
             <div className="col-sm-7 col-sm-offset-2" style={{marginTop: 15}}>
               <SearchGithub
                 history= { this.props.history }
-
               />
             </div>
           </nav>

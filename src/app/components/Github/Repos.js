@@ -35,7 +35,7 @@ export default class Repos extends React.Component {
     return (
       <div>
         <h3>USER REPOS</h3>
-        <p>List of repos:</p>
+        <p style={{fontWeight: 'bold'}}>List of repos:</p>
         <ul className='list-group'>
           { repos }
         </ul>

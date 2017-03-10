@@ -14,8 +14,6 @@ export default (
   <Route path="/" component={ Main }>
     <IndexRoute component={ Home } />
     <Route path="profile/:username" component={ Profile } />
-
-
   </Route>
 )
 // exporting Routes instructions for app js.

@@ -27,7 +27,7 @@ export default class Notes extends React.Component {
           username={ this.props.username } 
           addNote={ this.props.addNote } 
         />
-        <p>NOTES:</p>
+        <p style={{textTransform: 'uppercase', fontWeight: 'bold', marginTop: 20}} >NOTES:</p>
         <NoteList notes={ this.props.notes }/>
         
       </div>

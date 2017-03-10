@@ -11,7 +11,6 @@ export default class AddNote extends React.Component {
   render() {
     // retrieves value via the ref of the New Note before passing it to the
     // function
-    // console.log('this.props / AddNote ', this.props)
     return (
       <div className="input-group">
         <input type="text" className="form-control" placeholder="Add New Note" ref={ (input) => this._note = input }/>
@@ -31,9 +30,7 @@ export default class AddNote extends React.Component {
     setRef -> handleSubmit
     */
     const note = this._note
-    // console.log('note ', note)
     const newNote = note.value // grabbing value of this.note
-    // console.log(newNote)
     note.value = '' // clears input field
     this.props.addNote(newNote) // calling function from prop of Profile
     // component which is a func - handleAddNote()

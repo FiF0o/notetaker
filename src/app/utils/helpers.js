@@ -5,7 +5,7 @@ import axios from 'axios'
 
 // gets token for 5000 limit requests per hours
 import { token } from '../config/configToken'
-/*
+/**
  * Rate limit issues with Github API: https://developer.github.com/v3/#rate-limiting 
  * 
  * 1- Creates Personal access tokens from Github for our app: https://github.com/settings/tokens
@@ -18,42 +18,37 @@ import { token } from '../config/configToken'
  * Developer guide for reference: https://developer.github.com/v3/
  * */
 
+import Hashes from 'jshashes'
+// new SHA1 instance and base64 string encoding
+const SHA1 = new Hashes.SHA1().b64({token})
+const hashedGithubToken = getToken(SHA1)
+console.log('hashedGithubToken: ', hashedGithubToken)
+
+
+/** Beginning helpers **/
+
 const GITHUB_URL = 'https://api.github.com'
 
+// placeholder function in case we need to hash the token for encryption
 function getToken( hashedToken = 'abc') {
-  // console.log('getToken default va: ',hashedToken)
   return hashedToken
 }
 
-console.log('getToken(): ' , getToken());
-
-var githubToken = getToken({ token })
-console.log('githubToken: ', githubToken)
+const githubToken = getToken({ token })
 
 
 function getRepos(username) {
-  // console.log(`${GITHUB_URL}/users/${username}/repos`)
   return axios.get(`${GITHUB_URL}/users/${username}/repos`, {
     // GET request config passed down as a (xhr) response header
     params: githubToken // passed as params as headers {} is not allowed by chrome
   })
 }
 
-
 function getUserInfo(username) {
-  // console.log(`${GITHUB_URL}/users/${username}`)
-  // console.log('getUserInfo - githubToken ;', githubToken)
   return axios.get(`${GITHUB_URL}/users/${username}`, {
     params: githubToken
   })
 }
-
-// const promiseObj = getRepos('fif0o')
-//
-// promiseObj.then(function(data) {
-//   console.log(data)
-// })
-
 
 export default function getGithubInfo(username) {
   // get axios.all gets an array of promises
@@ -68,16 +63,3 @@ export default function getGithubInfo(username) {
       }))
   // first item is userRepo and second is bio
   }
-
-// require the module
-import Hashes from 'jshashes'
-console.log('Hashes: ', Hashes)
-// sample string
-// const str = 'This is a sample text!'
-// new SHA1 instance and base64 string encoding
-const SHA1 = new Hashes.SHA1().b64({token})
-// output to console
-console.log('SHA1: ',  SHA1)
-
-var hashedGithubToken = getToken(SHA1)
-console.log('hashedGithubToken: ', hashedGithubToken)
