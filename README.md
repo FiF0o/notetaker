@@ -25,7 +25,7 @@ The file must:
 ## Serving files
 
 `npm run build`.</br>
-App deployed: [Note taker](http://http://note-taker.surge.sh/)
+App deployed: [Note taker](http://note-taker.surge.sh/)
 
 
 ## Todo
